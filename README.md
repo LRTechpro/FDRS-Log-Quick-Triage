@@ -102,10 +102,6 @@ Example output:
 Line,Severity,Message
 248,Error,"Voltage out of range detected"
 
-
-## 🖥️ User Interface Overview
-
-The interface is intentionally minimal and read-only, optimized for fast triage and filtering without any risk of modifying raw log data.
 ## 🖥️ User Interface Overview
 
 ### Application Startup (No Log Loaded)
@@ -125,6 +121,7 @@ The interface is intentionally minimal and read-only, optimized for fast triage 
 
 ### CSV Export Output
 ![CSV Export](screenshots/fdrs-csv-export.png)
+
 
 
 ## 🚀 How to Run
