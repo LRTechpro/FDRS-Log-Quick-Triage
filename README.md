@@ -107,42 +107,43 @@ Line,Severity,Message
 ### 1) Application Startup (No Log Loaded)
 Initial state before a diagnostic log is opened.
 
-![Initial App](screenshots/fdrs-initial-app.png)
+![Initial App](screenshots/1_fdrs_lqt_initial_app.png)
 
 ---
 
 ### 2) Parsed Diagnostic Log (All Entries)
 Full diagnostic log loaded and parsed, showing all detected entries.
 
-![Parsed Log](screenshots/fdrs-parsed-log.png)
+![Parsed Log](screenshots/2_fdrs_lqt_parsed_log.png)
 
 ---
 
 ### 3) Info-Level Filtering
 Severity filter set to **Info**, isolating non-error operational messages.
 
-![Info Filter](screenshots/fdrs-filter-info.png)
+![Info Filter](screenshots/4_fdrs_lqt_filter_info.png)
 
 ---
 
 ### 4) Security / Access-Related Errors
 Filtered view highlighting security access issues, NRC errors, and restricted diagnostic responses.
 
-![Security Filter](screenshots/fdrs-filter-security.png)
+![Security Filter](screenshots/3_fdrs_lqt_filter_security.png)
 
 ---
 
 ### 5) Unique-Only Error View
 Duplicate errors collapsed to expose distinct failure modes.
 
-![Unique Errors](screenshots/fdrs-unique-errors.png)
+![Unique Errors](screenshots/5_fdrs_lqt_unique_errors.png)
 
 ---
 
 ### 6) CSV Export Output
 Filtered results exported for documentation, escalation, or reporting.
 
-![CSV Export](screenshots/fdrs-csv-export.png)
+![CSV Export](screenshots/6_fdrs_lqt_csv_export.png)
+
 
 
 
