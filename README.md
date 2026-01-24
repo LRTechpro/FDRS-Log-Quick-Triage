@@ -106,6 +106,25 @@ Line,Severity,Message
 ## 🖥️ User Interface Overview
 
 The interface is intentionally minimal and read-only, optimized for fast triage and filtering without any risk of modifying raw log data.
+## 🖥️ User Interface Overview
+
+### Application Startup (No Log Loaded)
+![Initial App](screenshots/fdrs-initial-app.png)
+
+### Parsed Diagnostic Log
+![Parsed Log](screenshots/fdrs-parsed-log.png)
+
+### Info-Level Filtering
+![Info Filter](screenshots/fdrs-filter-info.png)
+
+### Security-Related Errors
+![Security Filter](screenshots/fdrs-filter-security.png)
+
+### Unique-Only Error View
+![Unique Errors](screenshots/fdrs-unique-errors.png)
+
+### CSV Export Output
+![CSV Export](screenshots/fdrs-csv-export.png)
 
 
 ## 🚀 How to Run
