@@ -18,7 +18,7 @@ This tool focuses on **speed, clarity, and decision support** by:
 
 ---
 
-## 🧑‍💼 Why This Matters (Engineering Perspective)
+## 🧑‍💼 Engineering Context & Operational Relevance
 
 In automotive, cybersecurity, and embedded systems environments:
 
@@ -50,13 +50,35 @@ The same patterns apply directly to:
 - **Event-Driven WinForms Architecture**
   - Explicit, controlled event wiring
 - **Single Render Pipeline**
-  - All UI updates flow through one method (`ApplyFilter`)
+  - All UI updates flow through one method (`ApplyFilter`), ensuring consistent state, predictable behavior, and easy extensibility.
 - **Immutable Master Dataset**
   - Extracted log data is never mutated by filters
 - **Defensive UI Design**
   - Prevents duplicate handlers and inconsistent state
 - **Manual Layout Management**
   - Predictable resizing and control placement
+
+---
+## 🔍 Code Design Deep Dive
+
+### Single Render Pipeline
+The application uses a single rendering method (`ApplyFilter`) that rebuilds the UI view from an immutable master dataset.  
+This avoids UI state drift, prevents filter interactions from corrupting data, and ensures that export behavior always matches what the user sees.
+
+### Immutable Master Dataset
+Extracted log entries are stored once and never mutated by filtering operations.  
+All filters operate on views, not the underlying data, preserving raw log integrity.
+
+### Explainable Severity Classification
+Severity classification is implemented using transparent, keyword-based heuristics rather than opaque scoring models.  
+This allows engineers to easily audit, tune, and justify classification decisions.
+
+### Efficient Deduplication
+Duplicate log messages are removed using a case-insensitive HashSet, ensuring O(1) lookup performance while collapsing noisy repeat faults into distinct failure modes.
+
+### Defensive WinForms Lifecycle Management
+Dynamic UI elements are created deterministically during construction to avoid layout lifecycle issues common in WinForms applications.  
+Manual layout logic ensures predictable resizing and control alignment across window sizes.
 
 ---
 
