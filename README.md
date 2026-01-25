@@ -101,6 +101,7 @@ Example output:
 ```csv
 Line,Severity,Message
 248,Error,"Voltage out of range detected"
+```
 
 ## 🖥️ User Interface Overview
 
