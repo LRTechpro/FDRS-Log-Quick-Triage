@@ -1,6 +1,6 @@
 ﻿namespace FDRS_Log_Quick_Triage
 {
-    partial class Form1
+    partial class FdrsLogQuickTriageForm
     {
         /// <summary>
         ///  Required designer variable.
