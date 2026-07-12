@@ -59,6 +59,7 @@ The same patterns apply directly to:
   - Predictable resizing and control placement
 
 ---
+
 ## 🔍 Code Design Deep Dive
 
 ### Single Render Pipeline
@@ -170,7 +171,6 @@ Filtered results exported for documentation, escalation, or reporting.
 
 
 
-
 ## 🚀 How to Run
 
 1. Open the solution in **Visual Studio**
@@ -190,6 +190,6 @@ MIT License
 ## 👤 Author
 
 **Harold Watkins**  
-SOC Analyst • Automotive Cybersecurity • Embedded Systems Engineering  
-Ford SVT Analyst  
+Software Verification & Infrastructure Analyst, Ford Motor Company (via TEKsystems)  
+Automotive Diagnostics • Embedded Systems • Vehicle Software Verification  
 GitHub: https://github.com/LRTechpro
