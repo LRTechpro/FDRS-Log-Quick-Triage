@@ -1,195 +1,143 @@
 # FDRS Log Quick Triage
 
-A Windows Forms (.NET) desktop utility designed to rapidly triage **Ford Diagnostic & Repair System (FDRS)** log files by extracting high-signal entries, classifying severity, filtering results in real time, and exporting actionable findings to CSV.
+A Windows Forms (.NET) desktop utility for rapidly reviewing Ford Diagnostic & Repair System style log files by extracting high-signal entries, classifying severity, filtering results in real time, and exporting findings to CSV.
 
-This project was built to reflect **real automotive engineering and cybersecurity workflows**, where large, noisy logs must be triaged quickly, accurately, and defensibly.
+This is an independent portfolio project. It is not an official Ford tool and does not reproduce Ford internal processes or certify a root cause or cybersecurity condition.
 
----
+## Project Overview
 
-## 🔍 Project Overview
+Diagnostic logs can contain thousands of lines, many of which are not relevant during initial triage. This tool focuses on speed, clarity, and decision support by:
 
-FDRS logs can contain thousands of lines, many of which are irrelevant during initial triage.  
-This tool focuses on **speed, clarity, and decision support** by:
+* Surfacing high-value diagnostic lines
+* Automatically classifying severity
+* Allowing rapid filtering without modifying raw data
+* Exporting evidence suitable for documentation or escalation
 
-- Surfacing only high-value diagnostic lines
-- Automatically classifying severity
-- Allowing rapid filtering without modifying raw data
-- Exporting evidence suitable for documentation or escalation
+## Engineering Context and Operational Relevance
 
----
-
-## 🧑‍💼 Engineering Context & Operational Relevance
-
-In automotive, cybersecurity, and embedded systems environments:
-
-- Logs are **large, noisy, and time-sensitive**
-- Engineers must:
-  - Identify faults quickly
-  - Reduce cognitive load
-  - Justify decisions with evidence
+In automotive, cybersecurity, and embedded systems environments, engineers must identify faults quickly, reduce cognitive load, and justify decisions with evidence.
 
 This project demonstrates how to:
 
-- Design tooling that **extracts signal from noise**
-- Preserve raw data integrity while enabling fast analysis
-- Build UI utilities that support **engineering decision-making**, not just display
+* Extract signal from noisy diagnostic data
+* Preserve raw data integrity while enabling fast analysis
+* Build user-interface utilities that support engineering decision making
+* Apply explainable, auditable classification logic
 
-The same patterns apply directly to:
+The same patterns can support ECU diagnostics, telemetry review, incident triage, and other evidence-driven engineering workflows.
 
-- ECU diagnostics
-- SOC alert triage
-- Telemetry analysis
-- Incident response tooling
+## Technical Highlights
 
----
+### Event-Driven WinForms Architecture
 
-## 🧠 Technical Highlights
-
-### Architecture & Design Choices
-
-- **Event-Driven WinForms Architecture**
-  - Explicit, controlled event wiring
-- **Single Render Pipeline**
-  - All UI updates flow through one method (`ApplyFilter`), ensuring consistent state, predictable behavior, and easy extensibility.
-- **Immutable Master Dataset**
-  - Extracted log data is never mutated by filters
-- **Defensive UI Design**
-  - Prevents duplicate handlers and inconsistent state
-- **Manual Layout Management**
-  - Predictable resizing and control placement
-
----
-
-## 🔍 Code Design Deep Dive
+The application uses explicit event wiring and a controlled rendering pipeline.
 
 ### Single Render Pipeline
-The application uses a single rendering method (`ApplyFilter`) that rebuilds the UI view from an immutable master dataset.  
-This avoids UI state drift, prevents filter interactions from corrupting data, and ensures that export behavior always matches what the user sees.
+
+All user-interface updates flow through `ApplyFilter`, ensuring consistent state and predictable behavior.
 
 ### Immutable Master Dataset
-Extracted log entries are stored once and never mutated by filtering operations.  
-All filters operate on views, not the underlying data, preserving raw log integrity.
+
+Extracted log entries are stored once. Filters operate on views of the data rather than mutating the original collection.
 
 ### Explainable Severity Classification
-Severity classification is implemented using transparent, keyword-based heuristics rather than opaque scoring models.  
-This allows engineers to easily audit, tune, and justify classification decisions.
+
+Severity classification uses transparent keyword-based rules that can be audited and adjusted.
 
 ### Efficient Deduplication
-Duplicate log messages are removed using a case-insensitive HashSet, ensuring O(1) lookup performance while collapsing noisy repeat faults into distinct failure modes.
 
-### Defensive WinForms Lifecycle Management
-Dynamic UI elements are created deterministically during construction to avoid layout lifecycle issues common in WinForms applications.  
-Manual layout logic ensures predictable resizing and control alignment across window sizes.
+Duplicate log messages are removed with a case-insensitive `HashSet`, providing efficient lookup while collapsing repeated faults into distinct failure modes.
 
----
+## Core Functionality
 
-## ⚙️ Core Functionality
+* Load `.txt` diagnostic log files
+* Extract relevant lines using keyword-based regular expressions
+* Classify entries as Error, Warning, or Info
+* Filter by text and severity
+* Display unique-only results
+* Export currently visible rows to CSV
+* Keep the results grid read-only to preserve source integrity
 
-- Load `.txt` diagnostic log files
-- Extract relevant lines using keyword-based regex matching
-- Automatically classify entries by severity:
-  - **Error**
-  - **Warning**
-  - **Info**
-- Real-time filtering:
-  - Text search
-  - Severity dropdown
-  - Unique-only toggle
-- Export filtered results to CSV
-- Read-only results grid to preserve log integrity
-
----
-
-## ⚠️ Severity Classification Logic
-
-Severity is determined using explainable, keyword-based heuristics:
+## Severity Classification Logic
 
 | Severity | Matching Keywords |
-|--------|------------------|
+|---|---|
 | Error | `error`, `fail`, `nrc`, `denied` |
 | Warning | `warning`, `timeout`, `voltage` |
 | Info | Default fallback |
 
-These rules are intentionally simple, transparent, and easy to tune for real FDRS data.
+These rules are intentionally simple, transparent, and suitable for controlled testing with synthetic or sanitized diagnostic data.
 
----
+## CSV Export
 
-## 📤 CSV Export
+The application exports only the currently visible rows and honors active search, severity, and uniqueness filters.
 
-- Exports **only currently visible (filtered)** rows
-- Honors all active filters and uniqueness settings
-- CSV-safe quoting for commas and quotes
-
-Example output:
 ```csv
 Line,Severity,Message
 248,Error,"Voltage out of range detected"
 ```
 
-## 🖥️ User Interface Overview
+## Data Handling Boundary
 
-### 1) Application Startup (No Log Loaded)
-Initial state before a diagnostic log is opened.
+This public repository must contain only synthetic or fully sanitized data.
+
+Do not commit:
+
+* Real Ford or other OEM diagnostic logs
+* Vehicle Identification Numbers
+* Customer, technician, or dealer information
+* Internal endpoints, software records, tickets, or proprietary documentation
+* ECU firmware, calibration files, credentials, or seed-key material
+
+User-selected logs are read locally by the application. Review and sanitize every screenshot before publishing it.
+
+## User Interface
+
+### Application Startup
 
 ![Initial App](screenshots/1_fdrs_lqt_initial_app.png)
 
----
-
-### 2) Parsed Diagnostic Log (All Entries)
-Full diagnostic log loaded and parsed, showing all detected entries.
+### Parsed Diagnostic Log
 
 ![Parsed Log](screenshots/2_fdrs_lqt_parsed_log.png)
 
----
-
-### 3) Info-Level Filtering
-Severity filter set to **Info**, isolating non-error operational messages.
+### Information Filter
 
 ![Info Filter](screenshots/4_fdrs_lqt_filter_info.png)
 
----
-
-### 4) Security / Access-Related Errors
-Filtered view highlighting security access issues, NRC errors, and restricted diagnostic responses.
+### Security and Access Filter
 
 ![Security Filter](screenshots/3_fdrs_lqt_filter_security.png)
 
----
-
-### 5) Unique-Only Error View
-Duplicate errors collapsed to expose distinct failure modes.
+### Unique Error View
 
 ![Unique Errors](screenshots/5_fdrs_lqt_unique_errors.png)
 
----
-
-### 6) CSV Export Output
-Filtered results exported for documentation, escalation, or reporting.
+### CSV Export
 
 ![CSV Export](screenshots/6_fdrs_lqt_csv_export.png)
 
+## How to Run
 
+1. Open the solution in Visual Studio.
+2. Build the project.
+3. Run the application.
+4. Select a synthetic or sanitized log with **Open Log**.
+5. Apply filters as needed.
+6. Export the visible findings to CSV.
 
+## Portfolio Positioning
 
-## 🚀 How to Run
+This repository demonstrates C#, .NET WinForms, automotive diagnostic-domain knowledge, explainable log triage, immutable data handling, filtering, deduplication, and evidence export. It should be evaluated as a portfolio prototype rather than a production or enterprise diagnostic platform.
 
-1. Open the solution in **Visual Studio**
-2. Build the project
-3. Run the application
-4. Click **Open Log**
-5. Apply filters as needed
-6. Export results to CSV
-
-
-## 📄 License
+## License
 
 MIT License
 
----
+## Author
 
-## 👤 Author
+**Harold L. R. Watkins**
 
-**Harold Watkins**  
-Software Verification & Infrastructure Analyst, Ford Motor Company (via TEKsystems)  
-Automotive Diagnostics • Embedded Systems • Vehicle Software Verification  
-GitHub: https://github.com/LRTechpro
+Software Verification & Infrastructure Analyst, Ford Motor Company through TEKsystems
+
+Automotive Cybersecurity | Embedded Systems | Vehicle Software Verification
